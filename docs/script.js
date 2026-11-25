@@ -160,7 +160,7 @@ const PROJECTS = [
     arch: 'Automated DHCP option-150 + TFTP configuration templates with segmented voice VLANs and SRTP encryption.',
     tags: ['Cisco CME', 'TFTP', 'VoIP', 'VLAN'],
     img: 'images/voip-proj.png',
-    demo: 'images/TerminalAssessment2_Demo.mp4',
+    demo: 'https://github.com/fabianjstn3/portfolio/releases/download/v1.0-media/TerminalAssessment2_Demo.mp4',
     doc: 'images/GRP11-Terminal-Assessment-2.pdf'
   },
   {
