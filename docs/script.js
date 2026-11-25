@@ -161,7 +161,7 @@ const PROJECTS = [
     tags: ['Cisco CME', 'TFTP', 'VoIP', 'VLAN'],
     img: 'images/voip-proj.png',
     demo: 'images/TerminalAssessment2_Demo.mp4',
-    doc: 'images/terminalassessment2.pdf'
+    doc: 'images/GRP11-Terminal-Assessment-2.pdf'
   },
   {
     id: 'net-3',
