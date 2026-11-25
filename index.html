@@ -1,0 +1,520 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>carl/dev — IT Student · Data Analysis &amp; Systems</title>
+  <meta name="description" content="Carl — IT Student focused on data analysis, analytical dashboards, automations, and resilient networks designed to perform under pressure." />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; style-src-attr 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; media-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <link rel="icon" href="images/favicon.png" />
+
+  <!-- Google Fonts: Inter & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Architectural Dot-Grid & Ambient Accent Glow -->
+  <div class="bg-architecture" aria-hidden="true"></div>
+
+  <!-- ═══════════════════════════════════════════
+       BOOT / PRELOADER SEQUENCE
+  ════════════════════════════════════════════ -->
+  <div id="boot-loader" class="boot-loader" role="status" aria-live="polite" aria-label="Initializing session">
+    <div class="boot-inner">
+      <div class="boot-header">
+        <span class="boot-dot" aria-hidden="true"></span>
+        <span class="mono">CARL // SECURE SESSION — INITIALIZING</span>
+        <span id="boot-pct" class="mono boot-pct">0%</span>
+      </div>
+      <div class="boot-bar-track" aria-hidden="true">
+        <div id="boot-bar-fill" class="boot-bar-fill"></div>
+      </div>
+      <div class="boot-log mono" aria-hidden="true">
+        <span id="boot-status">INITIALIZING_SECURE_SHELL...</span>
+      </div>
+      <div id="boot-logs" class="boot-logs mono" aria-hidden="true"></div>
+      <p class="boot-skip mono">click or press any key to skip</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       STICKY MINIMAL HEADER
+  ════════════════════════════════════════════ -->
+  <header class="site-header" role="banner">
+    <div id="scroll-progress" aria-hidden="true"></div>
+    <div class="header-inner">
+      <a href="#hero" class="brand-badge mono" aria-label="carl/dev home">
+        <span class="brand-dot" aria-hidden="true"></span>
+        <span>carl/dev</span>
+      </a>
+
+      <nav class="header-nav" aria-label="Primary navigation">
+        <ul class="nav-list" role="list">
+          <li><a href="#about"    class="nav-link" data-section="about"><span class="nav-idx">01</span> about</a></li>
+          <li><a href="#projects" class="nav-link" data-section="projects"><span class="nav-idx">02</span> projects</a></li>
+          <li><a href="#tech"     class="nav-link" data-section="tech"><span class="nav-idx">03</span> stack</a></li>
+          <li><a href="#contact"  class="nav-link" data-section="contact"><span class="nav-idx">04</span> contact</a></li>
+        </ul>
+      </nav>
+
+      <div class="header-controls">
+        <!-- Accent Color Picker Trigger -->
+        <div class="accent-control-wrap">
+          <button id="accent-trigger" class="icon-btn mono" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="accent-popover" title="Customize accent color">
+            <span class="accent-swatch-preview" aria-hidden="true"></span>
+            <span class="accent-hex-label">#10B981</span>
+          </button>
+
+          <!-- Accent Color Picker Popover -->
+          <div id="accent-popover" class="accent-popover" role="dialog" aria-label="Accent color picker" aria-hidden="true">
+            <div class="popover-head">
+              <span class="mono popover-title">ACCENT_ENGINE</span>
+              <button id="accent-reset" class="popover-reset mono" type="button">reset</button>
+            </div>
+
+            <!-- 2D Saturation / Brightness Gradient Canvas -->
+            <div class="sv-picker-wrap">
+              <canvas id="sv-canvas" width="220" height="130" aria-label="Color saturation and brightness picker"></canvas>
+              <div id="sv-cursor" class="sv-cursor" aria-hidden="true"></div>
+            </div>
+
+            <!-- Hue Slider -->
+            <div class="hue-slider-wrap">
+              <input id="hue-slider" type="range" min="0" max="360" value="160" aria-label="Hue" />
+            </div>
+
+            <!-- Preset Swatches -->
+            <div class="preset-swatches" role="group" aria-label="Preset accent colors">
+              <button type="button" class="swatch-btn" data-hex="#10b981" style="--swatch:#10b981" aria-label="Emerald #10b981"></button>
+              <button type="button" class="swatch-btn" data-hex="#38bdf8" style="--swatch:#38bdf8" aria-label="Cyan #38bdf8"></button>
+              <button type="button" class="swatch-btn" data-hex="#f59e0b" style="--swatch:#f59e0b" aria-label="Amber #f59e0b"></button>
+              <button type="button" class="swatch-btn" data-hex="#a855f7" style="--swatch:#a855f7" aria-label="Violet #a855f7"></button>
+              <button type="button" class="swatch-btn" data-hex="#f43f5e" style="--swatch:#f43f5e" aria-label="Rose #f43f5e"></button>
+              <button type="button" class="swatch-btn" data-hex="#84cc16" style="--swatch:#84cc16" aria-label="Lime #84cc16"></button>
+            </div>
+
+            <!-- Hex Input -->
+            <div class="hex-input-row">
+              <label for="hex-input" class="mono">HEX</label>
+              <input id="hex-input" class="mono" type="text" maxlength="7" spellcheck="false" value="#10b981" aria-label="Hex color code" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Terminal Toggle -->
+        <button id="terminal-toggle" class="icon-btn terminal-toggle-btn mono" type="button" aria-label="Open interactive terminal (shortcut: /)" title="Open terminal (/)">
+          <span class="term-glyph">&gt;_</span>
+          <span class="kbd-hint">/</span>
+        </button>
+
+        <!-- Mobile Nav Toggle -->
+        <button id="mobile-nav-toggle" class="icon-btn mobile-menu-btn mono" type="button" aria-expanded="false" aria-controls="mobile-nav-drawer" aria-label="Toggle navigation menu">
+          MENU
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Nav Drawer -->
+    <div id="mobile-nav-drawer" class="mobile-nav-drawer" aria-hidden="true">
+      <a href="#about"    class="mobile-nav-link mono">[01] about</a>
+      <a href="#projects" class="mobile-nav-link mono">[02] projects</a>
+      <a href="#tech"     class="mobile-nav-link mono">[03] stack</a>
+      <a href="#contact"  class="mobile-nav-link mono">[04] contact</a>
+    </div>
+  </header>
+
+  <main id="main-content">
+
+    <!-- ═══════════════════════════════════════════
+         HERO SPLIT-LAYOUT (#hero)
+    ════════════════════════════════════════════ -->
+    <section id="hero" class="section hero-section" tabindex="-1">
+      <div class="container hero-grid">
+
+        <!-- Left Column -->
+        <div class="hero-copy">
+          <div class="eyebrow mono">
+            <span class="status-pulse" aria-hidden="true"></span>
+            <span>IT STUDENT · DATA ANALYSIS &amp; SYSTEMS</span>
+          </div>
+          <h1 class="hero-title">Justine Carl <span class="accent-text">Fabian</span></h1>
+
+          <p class="hero-lead">
+            The Art of Precision in Technology — turning raw datasets into clear decisions while building robust automations and networks designed to perform under pressure.
+          </p>
+
+          <div class="hero-actions">
+            <a href="#projects" class="btn btn-primary">
+              <span>Explore work</span>
+              <span aria-hidden="true">↓</span>
+            </a>
+            <button id="hero-open-terminal" type="button" class="btn btn-secondary mono">
+              <span>&gt;_ open terminal</span>
+            </button>
+          </div>
+
+          <div class="hero-meta mono">
+            <span>SYS.STATUS: <strong class="accent-text">OPERATIONAL</strong></span>
+            <span class="meta-sep" aria-hidden="true">·</span>
+            <span>MODULES: <strong>12 PROJECTS / 32 STACK</strong></span>
+          </div>
+        </div>
+
+        <!-- Right Column: Embedded Interactive CLI Terminal -->
+        <div class="hero-terminal-col">
+          <div class="terminal-window" id="hero-terminal" role="region" aria-label="Interactive CLI terminal">
+            <div class="terminal-bar">
+              <div class="terminal-dots" aria-hidden="true">
+                <span></span><span></span><span></span>
+              </div>
+              <span class="terminal-title mono">guest@carl:~</span>
+              <span class="terminal-badge mono">INTERACTIVE</span>
+            </div>
+
+            <div class="terminal-body mono" id="hero-term-output" tabindex="0">
+              <div class="term-line term-muted">CARL_OS v2.4.0 — precision-engineered runtime</div>
+              <div class="term-line term-muted">Type <span class="accent-text">help</span> to list available commands.</div>
+              <div class="term-line">&nbsp;</div>
+              <div class="term-line"><span class="term-prompt">guest@carl:~$</span> whoami</div>
+              <div class="term-line term-output-block">Carl — IT Student focused on data analysis, interactive BI dashboards, automations, and resilient networks designed to perform under pressure.</div>
+            </div>
+
+            <form class="terminal-input-row mono" data-terminal-form="hero" autocomplete="off">
+              <label for="hero-term-input" class="term-prompt">guest@carl:~$</label>
+              <div class="term-input-wrap">
+                <input id="hero-term-input" class="term-input" type="text" spellcheck="false" aria-label="Terminal command input" placeholder="type 'help'..." />
+                <span class="term-cursor" aria-hidden="true"></span>
+              </div>
+            </form>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         01 · ABOUT_ME (#about)
+    ════════════════════════════════════════════ -->
+    <section id="about" class="section about-section">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-kicker mono">01 · about_me</span>
+          <h2 class="section-title">Systems built with discipline.</h2>
+        </div>
+
+        <div class="about-grid">
+          <!-- Portrait with Corner Crosshair Ticks -->
+          <div class="about-portrait-col">
+            <figure class="portrait-frame crosshair-frame" id="portrait-tv-frame">
+              <span class="tick tick-tl" aria-hidden="true"></span>
+              <span class="tick tick-tr" aria-hidden="true"></span>
+              <span class="tick tick-bl" aria-hidden="true"></span>
+              <span class="tick tick-br" aria-hidden="true"></span>
+              <div class="portrait-screen">
+                <img src="images/carl.png" alt="Portrait of Carl" class="portrait-img" loading="lazy" />
+                <img src="images/carl.png" alt="" aria-hidden="true" class="portrait-glitch-slice" />
+                <div class="tv-scanlines" aria-hidden="true"></div>
+              </div>
+              <figcaption class="portrait-caption mono">
+                <span>ID: CARL // IT_STU</span>
+                <span class="accent-text">ACTIVE</span>
+              </figcaption>
+            </figure>
+          </div>
+
+          <!-- Bio & 3-Column Spec Grid -->
+          <div class="about-content-col">
+            <div class="bio-card">
+              <p class="bio-text">
+                Carl approaches technology and data analysis the way he approaches everything: with discipline, order, and precision.
+                He transforms complex datasets into clear visual insights while building robust automations and networks designed to perform reliably under pressure.
+              </p>
+              <p class="bio-sub">
+                From in-browser DuckDB-Wasm SQL exploration and statistical A/B attribution to ML inference pipelines and zero-trust edge routing, every layer is engineered for clarity, observability, and measurable impact.
+              </p>
+            </div>
+
+            <div class="spec-grid" aria-label="Core engineering principles">
+              <article class="spec-card">
+                <div class="spec-index mono">[01] DISCIPLINE</div>
+                <h3>Resilient Processes</h3>
+                <p>Clear processes and resilient deployments engineered for repeatable delivery.</p>
+              </article>
+
+              <article class="spec-card">
+                <div class="spec-index mono">[02] PRECISION</div>
+                <h3>Clean Architecture</h3>
+                <p>Clean architecture and careful testing across every boundary and interface.</p>
+              </article>
+
+              <article class="spec-card">
+                <div class="spec-index mono">[03] TRUST</div>
+                <h3>Security &amp; Visibility</h3>
+                <p>Security-first thinking and observability built in from day zero.</p>
+              </article>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         02 · SELECTED_WORK (#projects)
+    ════════════════════════════════════════════ -->
+    <section id="projects" class="section projects-section">
+      <div class="container">
+        <div class="section-header section-header-split">
+          <div>
+            <span class="section-kicker mono">02 · selected_work</span>
+            <h2 class="section-title">Engineered systems &amp; builds.</h2>
+          </div>
+          <div class="section-count mono" id="project-count-label">SHOWING 12 / 12</div>
+        </div>
+
+        <!-- Filter Bar with Sliding Active Indicator -->
+        <div class="filter-bar-wrap">
+          <div class="filter-tabs" role="tablist" aria-label="Project categories">
+            <div id="project-tab-indicator" class="tab-indicator" aria-hidden="true"></div>
+            <button class="filter-tab active mono" data-cat="all"  role="tab" aria-selected="true">ALL</button>
+            <button class="filter-tab mono"        data-cat="ai"   role="tab" aria-selected="false">AI &amp; AUTOMATION</button>
+            <button class="filter-tab mono"        data-cat="data" role="tab" aria-selected="false">DATA ANALYSIS</button>
+            <button class="filter-tab mono"        data-cat="net"  role="tab" aria-selected="false">NETWORK &amp; INFRA</button>
+            <button class="filter-tab mono"        data-cat="apps" role="tab" aria-selected="false">APPLICATIONS</button>
+          </div>
+        </div>
+
+        <!-- Project Cards Grid -->
+        <div id="projects-grid" class="projects-grid" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         03 · TECH_STACK (#tech)
+    ════════════════════════════════════════════ -->
+    <section id="tech" class="section tech-section">
+      <div class="container">
+        <div class="section-header section-header-split">
+          <div>
+            <span class="section-kicker mono">03 · tech_stack</span>
+            <h2 class="section-title">Technologies that land with purpose.</h2>
+          </div>
+          <div class="section-count mono" id="tech-count-label">32 MODULES LOADED</div>
+        </div>
+
+        <!-- Stack Category Filter -->
+        <div class="stack-filters" role="tablist" aria-label="Tech stack categories">
+          <button class="stack-tab active mono" data-stack="all"   role="tab" aria-selected="true">ALL [32]</button>
+          <button class="stack-tab mono"        data-stack="lang"  role="tab" aria-selected="false">[01] LANGUAGES &amp; RUNTIME</button>
+          <button class="stack-tab mono"        data-stack="cloud" role="tab" aria-selected="false">[02] CLOUD &amp; DEVOPS</button>
+          <button class="stack-tab mono"        data-stack="data"  role="tab" aria-selected="false">[03] DATA &amp; AI</button>
+          <button class="stack-tab mono"        data-stack="net"   role="tab" aria-selected="false">[04] NETWORKING &amp; INFRA</button>
+        </div>
+
+        <!-- Categorized Bento Matrix -->
+        <div id="tech-bento" class="tech-bento" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         04 · CONTACT (#contact)
+    ════════════════════════════════════════════ -->
+    <section id="contact" class="section contact-section">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-kicker mono">04 · contact</span>
+          <h2 class="section-title">Initialize a conversation.</h2>
+        </div>
+
+        <div class="contact-grid">
+          <!-- Left: Clickable Copy-to-Clipboard Channels -->
+          <div class="contact-channels">
+            <p class="contact-intro">
+              Interested in a collaboration? Send a message and precision will answer. Click any channel below to copy directly to your clipboard.
+            </p>
+
+            <div class="channel-list" aria-label="Direct communication channels">
+              <button type="button" class="channel-row" data-channel="facebook" data-label="Facebook">
+                <div class="channel-left">
+                  <span class="channel-tag mono">FACEBOOK</span>
+                  <span class="channel-desc">Connect with me on Facebook for casual and quick inquiries or collaborations.</span>
+                </div>
+                <div class="channel-right mono">
+                  <span class="channel-val">Justine Carl</span>
+                  <span class="copy-badge">COPY</span>
+                </div>
+              </button>
+
+              <button type="button" class="channel-row" data-channel="phone" data-label="Phone">
+                <div class="channel-left">
+                  <span class="channel-tag mono">PHONE</span>
+                  <span class="channel-desc">Prefer to talk directly? Reach out by phone during business hours.</span>
+                </div>
+                <div class="channel-right mono">
+                  <span class="channel-val" data-protected-channel="phone">[PROTECTED]</span>
+                  <span class="copy-badge">COPY</span>
+                </div>
+              </button>
+
+              <button type="button" class="channel-row" data-channel="email" data-label="Email">
+                <div class="channel-left">
+                  <span class="channel-tag mono">EMAIL</span>
+                  <span class="channel-desc">Send an email for project discussions, technical support, or inquiries.</span>
+                </div>
+                <div class="channel-right mono">
+                  <span class="channel-val" data-protected-channel="email">[PROTECTED]</span>
+                  <span class="copy-badge">COPY</span>
+                </div>
+              </button>
+            </div>
+          </div>
+
+          <!-- Right: Minimal Hairline Contact Form -->
+          <div class="contact-form-wrap">
+            <form id="contact-form" class="contact-form" novalidate>
+              <div class="hp-field" aria-hidden="true">
+                <label for="website-url">Website</label>
+                <input id="website-url" name="website" type="text" tabindex="-1" autocomplete="off" />
+              </div>
+
+              <div class="form-field">
+                <label for="name" class="mono">NAME</label>
+                <input id="name" name="name" type="text" autocomplete="name" maxlength="80" required placeholder="Your name" />
+              </div>
+
+              <div class="form-field">
+                <label for="email" class="mono">EMAIL</label>
+                <input id="email" name="email" type="email" autocomplete="email" maxlength="120" required placeholder="your@email.com" />
+              </div>
+
+              <div class="form-field">
+                <label for="message" class="mono">MESSAGE</label>
+                <textarea id="message" name="message" rows="5" maxlength="1500" required placeholder="What's on your mind?"></textarea>
+              </div>
+
+              <div class="form-actions">
+                <button type="submit" class="btn btn-primary form-submit mono">
+                  <span>DISPATCH_MESSAGE()</span>
+                  <span aria-hidden="true">→</span>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ═══════════════════════════════════════════
+       FOOTER
+  ════════════════════════════════════════════ -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="container footer-inner">
+      <div class="footer-left">
+        <span class="mono footer-copy">© 2025 Carl | Passion. Grit. Progress.</span>
+        <span class="mono footer-hotkeys">press <kbd>1</kbd>–<kbd>4</kbd> to jump to section · <kbd>/</kbd> for terminal</span>
+      </div>
+
+      <div class="footer-socials" aria-label="Social media links">
+        <a href="https://facebook.com/fabianjstn" target="_blank" rel="noopener noreferrer" aria-label="Facebook" class="social-link mono">FB</a>
+        <a href="https://instagram.com/dy444stin" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="social-link mono">IG</a>
+        <a href="https://www.linkedin.com/in/justine-fabian/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" class="social-link mono">IN</a>
+        <a href="https://github.com/fabianjstn3" target="_blank" rel="noopener noreferrer" aria-label="GitHub" class="social-link mono">GH</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ═══════════════════════════════════════════
+       PROJECT SPEC DRAWER / MODAL
+  ════════════════════════════════════════════ -->
+  <div id="project-drawer" class="modal-backdrop" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="drawer-title">
+    <div class="drawer-panel">
+      <div class="drawer-head">
+        <div class="drawer-meta mono">
+          <span id="drawer-index" class="accent-text">01</span>
+          <span>//</span>
+          <span id="drawer-category">AI &amp; AUTOMATION</span>
+        </div>
+        <button id="drawer-close" class="icon-btn mono" type="button" aria-label="Close project details">ESC</button>
+      </div>
+
+      <div class="drawer-body">
+        <div class="drawer-preview">
+          <img id="drawer-img" src="" alt="" />
+          <video id="drawer-video" class="drawer-video" controls playsinline hidden></video>
+        </div>
+        <h3 id="drawer-title" class="drawer-title"></h3>
+        <p id="drawer-desc" class="drawer-desc"></p>
+
+        <div class="drawer-specs">
+          <div class="drawer-spec-label mono">ARCHITECTURE_NOTES</div>
+          <p id="drawer-arch" class="drawer-arch"></p>
+        </div>
+
+        <div id="drawer-tags" class="drawer-tags mono"></div>
+
+        <div class="drawer-actions">
+          <button id="drawer-demo-btn" type="button" class="btn btn-primary mono">
+            <span>▶ Demo</span>
+          </button>
+          <a id="drawer-doc-btn" href="#" target="_blank" rel="noopener noreferrer" class="btn btn-secondary mono">
+            <span>Documentation ↗</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       FLOATING INTERACTIVE TERMINAL MODAL (/)
+  ════════════════════════════════════════════ -->
+  <div id="terminal-modal" class="modal-backdrop" role="dialog" aria-modal="true" aria-hidden="true" aria-label="Interactive command terminal">
+    <div class="terminal-modal-panel">
+      <div class="terminal-window terminal-window-modal">
+        <div class="terminal-bar">
+          <div class="terminal-dots" aria-hidden="true">
+            <span></span><span></span><span></span>
+          </div>
+          <span class="terminal-title mono">guest@carl:~ — global shell</span>
+          <button id="terminal-modal-close" class="icon-btn mono" type="button" aria-label="Close terminal">ESC</button>
+        </div>
+
+        <div class="terminal-body mono" id="modal-term-output" tabindex="0">
+          <div class="term-line term-muted">CARL_OS GLOBAL SHELL — type <span class="accent-text">help</span> for commands, <span class="accent-text">Esc</span> to close.</div>
+          <div class="term-line">&nbsp;</div>
+        </div>
+
+        <form class="terminal-input-row mono" data-terminal-form="modal" autocomplete="off">
+          <label for="modal-term-input" class="term-prompt">guest@carl:~$</label>
+          <div class="term-input-wrap">
+            <input id="modal-term-input" class="term-input" type="text" spellcheck="false" aria-label="Global terminal command input" placeholder="help, about, projects, stack, theme #38bdf8..." />
+            <span class="term-cursor" aria-hidden="true"></span>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       DISPATCH CONFIRMATION MODAL
+  ════════════════════════════════════════════ -->
+  <div id="dispatch-modal" class="modal-backdrop" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="dispatch-title">
+    <div class="dispatch-panel">
+      <div class="dispatch-status mono accent-text">[OK] MESSAGE_DISPATCHED</div>
+      <h3 id="dispatch-title">Transmission Recorded</h3>
+      <p id="dispatch-summary" class="dispatch-summary">Your message has been logged. Precision will answer.</p>
+      <button id="dispatch-close" class="btn btn-primary mono" type="button">ACKNOWLEDGE [ESC]</button>
+    </div>
+  </div>
+
+  <!-- Toast Container -->
+  <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,63 @@
+name: Security Audit
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Check JavaScript syntax
+        run: node --check script.js
+
+      - name: Validate vercel.json
+        run: node -e "JSON.parse(require('fs').readFileSync('vercel.json', 'utf8'))"
+
+      - name: Scan for unsafe DOM sinks
+        run: |
+          if grep -rnE "(\beval\s*\(|new\s+Function\s*\(|\.innerHTML\s*=)" script.js index.html; then
+            echo "::error::Unsafe DOM sink detected (eval, new Function, or innerHTML)."
+            exit 1
+          fi
+
+      - name: Enforce rel="noopener noreferrer" on target="_blank"
+        run: |
+          node -e '
+            const fs = require("fs");
+            const html = fs.readFileSync("index.html", "utf8");
+            const matches = html.match(/<a\b[^>]*target="_blank"[^>]*>/gi) || [];
+            for (const tag of matches) {
+              if (!/rel="[^"]*noopener[^"]*noreferrer[^"]*"/i.test(tag)) {
+                console.error("Missing rel=\"noopener noreferrer\" on:", tag);
+                process.exit(1);
+              }
+            }
+          '
+
+      - name: Verify CSP directives in index.html and vercel.json
+        run: |
+          node -e '
+            const fs = require("fs");
+            const html = fs.readFileSync("index.html", "utf8");
+            const vercel = JSON.parse(fs.readFileSync("vercel.json", "utf8"));
+            const cspHeader = vercel.headers[0].headers.find(h => h.key === "Content-Security-Policy");
+            if (!cspHeader || !cspHeader.value.includes("object-src \x27none\x27") || !cspHeader.value.includes("frame-ancestors \x27none\x27")) {
+              console.error("Missing required CSP directives in vercel.json");
+              process.exit(1);
+            }
+            if (!html.includes("http-equiv=\"Content-Security-Policy\"") || !html.includes("object-src \x27none\x27")) {
+              console.error("Missing or malformed CSP meta tag in index.html");
+              process.exit(1);
+            }
+          '
