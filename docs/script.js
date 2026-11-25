@@ -160,7 +160,7 @@ const PROJECTS = [
     arch: 'Automated DHCP option-150 + TFTP configuration templates with segmented voice VLANs and SRTP encryption.',
     tags: ['Cisco CME', 'TFTP', 'VoIP', 'VLAN'],
     img: 'images/voip-proj.png',
-    demo: 'https://github.com/fabianjstn3/portfolio/releases/download/v1.0-media/TerminalAssessment2_Demo.mp4',
+    demo: 'https://www.youtube-nocookie.com/embed/hhoV6DEQV-4',
     doc: 'images/GRP11-Terminal-Assessment-2.pdf'
   },
   {
@@ -592,6 +592,7 @@ const drawerIdx = document.getElementById('drawer-index');
 const drawerCat = document.getElementById('drawer-category');
 const drawerImg = document.getElementById('drawer-img');
 const drawerVideo = document.getElementById('drawer-video');
+const drawerIframe = document.getElementById('drawer-iframe');
 const drawerTitle = document.getElementById('drawer-title');
 const drawerDesc = document.getElementById('drawer-desc');
 const drawerArch = document.getElementById('drawer-arch');
@@ -600,6 +601,31 @@ const drawerDemoBtn = document.getElementById('drawer-demo-btn');
 const drawerDocBtn = document.getElementById('drawer-doc-btn');
 
 let activeDemoSrc = null;
+
+function toYouTubeEmbedUrl(rawUrl) {
+  try {
+    const parsed = new URL(rawUrl);
+    const host = parsed.hostname.replace(/^www\./, '');
+    let videoId = '';
+
+    if (host === 'youtu.be') {
+      videoId = parsed.pathname.slice(1).split('/')[0];
+    } else if (host === 'youtube.com' || host === 'youtube-nocookie.com') {
+      if (parsed.pathname === '/watch') {
+        videoId = parsed.searchParams.get('v') || '';
+      } else if (parsed.pathname.startsWith('/embed/') || parsed.pathname.startsWith('/shorts/')) {
+        videoId = parsed.pathname.split('/')[2] || '';
+      }
+    }
+
+    if (/^[a-zA-Z0-9_-]{6,20}$/.test(videoId)) {
+      return `https://www.youtube-nocookie.com/embed/${videoId}?rel=0&autoplay=1`;
+    }
+  } catch {
+    return '';
+  }
+  return '';
+}
 
 function moveTabIndicator(tab) {
   if (!projectTabIndicator || !tab) return;
@@ -613,6 +639,10 @@ function resetDrawerMedia() {
     drawerVideo.removeAttribute('src');
     drawerVideo.load();
     drawerVideo.hidden = true;
+  }
+  if (drawerIframe) {
+    drawerIframe.removeAttribute('src');
+    drawerIframe.hidden = true;
   }
   if (drawerImg) drawerImg.hidden = false;
   if (drawerDemoBtn) {
@@ -670,13 +700,22 @@ function openProjectDrawer(project, indexLabel) {
 
 drawerDemoBtn?.addEventListener('click', () => {
   const safeDemo = activeDemoSrc ? sanitizeUrl(activeDemoSrc) : '';
-  if (!safeDemo || !drawerVideo || !drawerImg) return;
-  const showingVideo = !drawerVideo.hidden;
+  if (!safeDemo || !drawerImg) return;
+  const showingMedia = (drawerVideo && !drawerVideo.hidden) || (drawerIframe && !drawerIframe.hidden);
   const label = drawerDemoBtn.querySelector('span');
 
-  if (showingVideo) {
+  if (showingMedia) {
     resetDrawerMedia();
-  } else {
+    return;
+  }
+
+  const embedUrl = toYouTubeEmbedUrl(safeDemo);
+  if (embedUrl && drawerIframe) {
+    drawerImg.hidden = true;
+    drawerIframe.src = embedUrl;
+    drawerIframe.hidden = false;
+    if (label) label.textContent = '■ Preview';
+  } else if (drawerVideo) {
     drawerImg.hidden = true;
     drawerVideo.src = safeDemo;
     drawerVideo.hidden = false;

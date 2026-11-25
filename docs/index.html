@@ -5,8 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>carl/dev — IT Student · Data Analysis &amp; Systems</title>
   <meta name="description" content="Carl — IT Student focused on data analysis, analytical dashboards, automations, and resilient networks designed to perform under pressure." />
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; style-src-attr 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; media-src 'self' https:; object-src 'none'; base-uri 'self'; form-action 'self'" />
-  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; style-src-attr 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; media-src 'self'; frame-src https://www.youtube-nocookie.com https://www.youtube.com; object-src 'none'; base-uri 'self'; form-action 'self'" />
   <link rel="icon" type="image/png" href="images/favicon.png?v=2" />
   <link rel="shortcut icon" type="image/png" href="images/favicon.png?v=2" />
   <link rel="apple-touch-icon" href="images/favicon.png?v=2" />
@@ -449,6 +448,15 @@
         <div class="drawer-preview">
           <img id="drawer-img" src="" alt="" />
           <video id="drawer-video" class="drawer-video" controls playsinline hidden></video>
+          <iframe
+            id="drawer-iframe"
+            class="drawer-iframe"
+            title="Project demo video"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+            hidden
+          ></iframe>
         </div>
         <h3 id="drawer-title" class="drawer-title"></h3>
         <p id="drawer-desc" class="drawer-desc"></p>

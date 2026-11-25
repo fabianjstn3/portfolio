@@ -1558,7 +1558,16 @@ body {
   background: #000;
 }
 
+.drawer-iframe {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: #000;
+}
+
 .drawer-video[hidden],
+.drawer-iframe[hidden],
 .drawer-preview img[hidden] {
   display: none;
 }
